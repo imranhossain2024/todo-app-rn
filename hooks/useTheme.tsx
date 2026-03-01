@@ -1,6 +1,11 @@
-import { View, Text } from 'react-native';
-import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 // asycn is React Native's simple, promise-based api for persisting small bits of data on a user's device. Think of it as  the mobkile-app equivalent of the browser's localstorage, but asynchronous and cross-platform.`
 
 export interface ColorScheme {
@@ -89,8 +94,8 @@ const darkColors: ColorScheme = {
 
 interface ThemeContextType {
   colors: ColorScheme;
-  isDark: boolean;
-  tpggleDarkMode: () => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
@@ -100,7 +105,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     // get the user's choice
-    AsyncStorage.getItem("darkMode").then((value) => {
+    AsyncStorage.getItem('darkMode').then((value) => {
       if (value) setIsDarkMode(JSON.parse(value));
     });
   }, []);
@@ -108,7 +113,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const toggleDarkMode = async () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
-    await AsyncStorage.setItem("darkMode", JSON.stringify(newMode));
+    await AsyncStorage.setItem('darkMode', JSON.stringify(newMode));
   };
 
   const colors = isDarkMode ? darkColors : lightColors;
@@ -122,10 +127,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
 const useTheme = () => {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return context; 
+  return context;
 };
 
 export default useTheme;
