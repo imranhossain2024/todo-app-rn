@@ -7,8 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "todoapprn",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
+    "ios": { 
       "supportsTablet": true
     },
     "android": {
@@ -42,7 +41,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     }
   }
 }
