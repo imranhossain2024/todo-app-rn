@@ -1,7 +1,13 @@
+import { ConvexProvider, ConvexReactClient } from 'convex/react';
+
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import useTheme from '@/hooks/useTheme';
+
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+  unsavedChangesWarning: false,
+});
 
 const TabsLayout = () => {
   const { colors } = useTheme();
